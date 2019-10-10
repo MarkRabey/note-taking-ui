@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import s from './App.module.css';
+
+import { NoteList } from './components/NoteList';
+import { Editor } from './components/Editor';
 
 function App() {
+  const [ activeNoteId, setActiveNoteId ] = useState(null);
+
+  const selectNote = (_id) => setActiveNoteId(_id);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={ s.app }>
+      <NoteList
+        onSelectNote={ selectNote }
+        activeNoteId={ activeNoteId }
+      />
+      <Editor activeNoteId={ activeNoteId } />
     </div>
   );
 }

@@ -1,0 +1,9 @@
+.container {
+  flex: 3;
+  background-color: #d1d1d1;
+  padding: 12px;
+}
+
+.container--active {
+  background-color: #fff;
+}

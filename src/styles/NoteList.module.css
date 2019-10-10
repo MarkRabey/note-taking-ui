@@ -1,0 +1,28 @@
+.container {
+  flex: 1;
+  background-color: #fff;
+  padding: 12px;
+  border-right: 1px solid #d1d1d1;
+}
+
+.note-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.note {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #d1d1d1;
+  padding: 24px 12px;
+}
+
+.note--active {
+  background-color: #d1d1d1;
+}
+
+.note__link {
+  display: block;
+  width: 100%;
+}
