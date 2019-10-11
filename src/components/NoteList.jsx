@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import s from '../styles/NoteList.module.css';
 import { Header } from './Header';
 import cx from 'classnames';
-import axios from 'axios';
+import apiService from '../services/apiService';
 
 export const NoteList = props => {
   const [notes, setNotes] = useState([]);
@@ -17,16 +17,11 @@ export const NoteList = props => {
           }
         }
       `;
-      
-      axios({
-        url: 'http://localhost:4300/graphql',
-        method: 'POST',
-        data: {
-          query: notesQuery,
+      apiService.query(notesQuery).then(data => {
+        if (data.allNotes) {
+          setNotes(data.allNotes);
         }
-      }).then(({ data }) => data).then(({ data }) => {
-        setNotes(data.allNotes);
-      }).catch(e => console.log(e));
+      });
     }
   });
   
