@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
-import axios from 'axios';
 import s from '../styles/Editor.module.css';
 import { Header } from './Header';
+import apiService from '../services/apiService';
 
 export const Editor = props => {
   const [title, setTitle] = useState('');
@@ -19,18 +19,13 @@ export const Editor = props => {
           }
         }
       `;
-      
-      axios({
-        url: 'http://localhost:4300/graphql',
-        method: 'POST',
-        data: {
-          query: noteQuery,
+
+      apiService.query(noteQuery).then(({ getNote }) => {
+        if (getNote) {
+          setTitle(getNote.title);
+          setContent(getNote.content);
         }
-      }).then(({ data }) => data).then(({ data }) => data.getNote)
-      .then(note => {
-        setTitle(note.title);
-        setContent(note.content);
-      }).catch(e => console.log(e));
+      });
     }
   }, [props.activeNoteId])
 
@@ -44,16 +39,10 @@ export const Editor = props => {
       }
     `;
     
-    axios({
-      url: 'http://localhost:4300/graphql',
-      method: 'POST',
-      data: {
-        query: noteMutation,
-      }
-    }).then(() => {
+    apiService.query(noteMutation).then(() => {
       setMessage('Note saved!');
       setTimeout(() => setMessage(null), 3000);
-    }).catch(e => console.log(e));
+    });
   }
 
   const handleContentChange = (e) => {
